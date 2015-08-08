@@ -12,22 +12,28 @@ def main():
     access_token_key = os.environ.get('ACCESS_TOKEN_KEY')
     access_token_secret = os.environ.get('ACCESS_TOKEN_SECRET')
     api = TwitterAPI(
-        consumer_key, 
-        consumer_secret, 
-        access_token_key, 
+        consumer_key,
+        consumer_secret,
+        access_token_key,
         access_token_secret
     )
+    # tashkent = [
+    #     '69.12597656249999',
+    #     '41.178653972331674',
+    #     '69.4281005859375',
+    #     '41.39741506646461'
+    # ]
     tashkent = [
-      '69.12597656249999',
-      '41.178653972331674',
-      '69.4281005859375',
-      '41.39741506646461'
-      ]
+        '69.140877',
+        '41.209011',
+        '69.397034',
+        '41.401421'
+    ]
 
-    print 'Connecting to Twitter stream ...'
+    print('Connecting to Twitter stream ...')
     r = get_stream_with_track(api, tashkent)
     for item in r:
-        print item['user']['name'], '-->', item['text']
+        print(item['user']['name'], '-->', item['text'])
 
 
 if __name__ == '__main__':
