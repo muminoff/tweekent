@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 
-"""
-This example uses Tornado's gen_.
-
-.. _gen: http://www.tornadoweb.org/documentation/gen.html
-"""
-
 from __future__ import print_function
 
 import os
@@ -24,7 +18,8 @@ db_user = os.environ.get('MOMOKO_TEST_USER', 'sardor')
 db_password = os.environ.get('MOMOKO_TEST_PASSWORD', '')
 db_host = os.environ.get('MOMOKO_TEST_HOST', '')
 db_port = os.environ.get('MOMOKO_TEST_PORT', 5432)
-enable_hstore = True if os.environ.get('MOMOKO_TEST_HSTORE', False) == '1' else False
+enable_hstore = True \
+    if os.environ.get('MOMOKO_TEST_HSTORE', False) == '1' else False
 dsn = 'dbname=%s user=%s password=%s host=%s port=%s' % (
     db_database, db_user, db_password, db_host, db_port)
 
@@ -45,15 +40,15 @@ class OverviewHandler(BaseHandler):
 
     def get(self):
         self.write("""
-<ul>
-    <li><a href="/mogrify">Mogrify</a></li>
-    <li><a href="/query">A single query</a></li>
-    <li><a href="/hstore">A hstore query</a></li>
-    <li><a href="/json">A JSON query</a></li>
-    <li><a href="/transaction">A transaction</a></li>
-    <li><a href="/multi_query">Multiple queries executed by yielding a list</a></li>
-    <li><a href="/connection">Manual connection management</a></li>
-</ul>
+        <ul>
+            <li><a href="/mogrify">Mogrify</a></li>
+            <li><a href="/query">A single query</a></li>
+            <li><a href="/hstore">A hstore query</a></li>
+            <li><a href="/json">A JSON query</a></li>
+            <li><a href="/transaction">A transaction</a></li>
+            <li><a href="/multi_query">Multiple queries executed by yielding a list</a></li>
+            <li><a href="/connection">Manual connection management</a></li>
+        </ul>
         """)
         self.finish()
 
@@ -92,7 +87,9 @@ class HstoreQueryHandler(BaseHandler):
             try:
                 cursor = yield self.db.execute("SELECT 'a=>b, c=>d'::hstore;")
                 self.write("Query results: %s<br>" % cursor.fetchall())
-                cursor = yield self.db.execute("SELECT %s;", ({"e": "f", "g": "h"},))
+                cursor = yield self.db.execute(
+                    "SELECT %s;", ({"e": "f", "g": "h"},)
+                )
                 self.write("Query results: %s<br>" % cursor.fetchall())
             except Exception as error:
                 self.write(str(error))
@@ -108,7 +105,9 @@ class JsonQueryHandler(BaseHandler):
     def get(self):
         if self.db.server_version >= 90200:
             try:
-                cursor = yield self.db.execute('SELECT \'{"a": "b", "c": "d"}\'::json;')
+                cursor = yield self.db.execute(
+                    'SELECT \'{"a": "b", "c": "d"}\'::json;'
+                )
                 self.write("Query results: %s<br>" % cursor.fetchall())
             except Exception as error:
                 self.write(str(error))
@@ -172,7 +171,10 @@ class ConnectionQueryHandler(BaseHandler):
                     if self.http_connection_closed:
                         break
                     cursor = yield connection.execute("SELECT pg_sleep(1);")
-                    self.write('Query %d results: %s<br>\n' % (i + 1, cursor.fetchall()))
+                    self.write('Query %d results: %s<br>\n' % (
+                        i + 1,
+                        cursor.fetchall())
+                    )
                     self.flush()
         except Exception as error:
             self.write(str(error))
