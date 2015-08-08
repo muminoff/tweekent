@@ -1,5 +1,6 @@
 import os
 from TwitterAPI import TwitterAPI
+import json
 
 
 def get_stream_with_track(api, place):
@@ -33,7 +34,9 @@ def main():
     print('Connecting to Twitter stream ...')
     r = get_stream_with_track(api, tashkent)
     for item in r:
-        print(item['user']['name'], '-->', item['text'])
+        # print(item['user']['name'], '-->', item['text'])
+        print(json.dumps(item))
+        break
 
 
 if __name__ == '__main__':
