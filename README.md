@@ -10,3 +10,7 @@
     * Python 3.4
     * Postgresql 9.5
     * Twitter Developer account
+
+##### Console screenshot
+
+![alt text](./screenshot/screenshot.png "Screenshot")
