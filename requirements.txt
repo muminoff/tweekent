@@ -1,1 +1,5 @@
+Django==1.8.3
+Momoko==2.1.1
+psycopg2==2.6.1
+tornado==4.2.1
 TwitterAPI==2.3.3.1
